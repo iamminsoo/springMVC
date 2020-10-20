@@ -1,10 +1,16 @@
 package kr.co.softcampus.controller;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.annotation.PropertySources;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+
+import kr.co.softcampus.beans.DataBean1;
 
 @Controller
 //@PropertySource("/WEB-INF/properties/data1.properties")
@@ -63,6 +69,21 @@ public class TestController {
 		System.out.printf("ddd.d2 : %s\n", d2);
 		
 		return "test1";
+	}
+	
+	@GetMapping("/input_data")
+	public String input_data(DataBean1 dataBean1) {
+		return "input_data";
+	}
+	
+	@PostMapping("/input_pro")
+	public String input_pro(@Valid DataBean1 dataBean1, BindingResult result) {
+		
+		if(result.hasErrors()) {
+			return "input_data";
+		}
+		
+		return "input_success";
 	}
 	
 }
